@@ -1,0 +1,10 @@
+.hide-replies-button {
+    margin-left: 10px;
+    margin-top: 5px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
