@@ -158,7 +158,6 @@ const ResearcherCardView: React.FC<ResearcherCardViewProps> = ({ researcherId })
                     )}
 
                     <div className="comments-section">
-                        <h3>Comments</h3>
                         {topLevelComments.length === 0 ? (
                             <p>No comments yet. Be the first to comment!</p>
                         ) : (

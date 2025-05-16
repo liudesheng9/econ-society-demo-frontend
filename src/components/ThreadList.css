@@ -1,0 +1,78 @@
+.thread-list {
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.threads-list-container {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    padding: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+}
+
+.threads-list-container:hover {
+    border-color: #a5a5a5;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+.thread-list-title h3 {
+    margin: 0 0 8px 0;
+    font-size: 18px;
+    color: #1a1a1b;
+    font-weight: 500;
+}
+
+.thread-list-content p {
+    margin: 0;
+    color: #4f4f4f;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.create-thread-form {
+    background-color: #f6f7f8;
+    padding: 16px;
+    border-radius: 4px;
+    margin-bottom: 24px;
+}
+
+.create-thread-form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.create-thread-form button {
+    background-color: #0079d3;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.create-thread-form button:hover {
+    background-color: #0061a9;
+}
+
+.loading,
+.error {
+    text-align: center;
+    padding: 20px;
+}
+
+.error {
+    color: #d93025;
+}
+
+.thread-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}

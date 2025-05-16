@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { api } from '../utils/api';
 import { Link } from 'react-router-dom';
 import { Thread } from '../types';
+import './ThreadList.css';
 
 const ThreadList: React.FC = () => {
     const [threadIds, setThreadIds] = useState<number[]>([]);
@@ -11,6 +12,7 @@ const ThreadList: React.FC = () => {
     const [newThreadTitle, setNewThreadTitle] = useState('');
     const [newThreadContent, setNewThreadContent] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isPostExpanded, setIsPostExpanded] = useState(false);
 
     const fetchThreadIDs = async () => {
         setLoading(true);
@@ -30,6 +32,8 @@ const ThreadList: React.FC = () => {
         try {
             const ids = await api.getThreadIds();
             const threads = await Promise.all(ids.map(id => api.getThread(id)));
+            //sort threads by id on the reverse order
+            threads.sort((a, b) => b.id - a.id);
             setThreads(threads);
             setError(null);
         } catch (err) {
@@ -53,10 +57,13 @@ const ThreadList: React.FC = () => {
         try {
             await api.createThread({ title: newThreadTitle, content: newThreadContent, room_id: 1 });
             setNewThreadTitle('');
-            fetchThreadIDs(); // Refresh thread list
+            setNewThreadContent('');
+            // Refresh thread list
         } catch (error) {
             console.error('Failed to create thread:', error);
         } finally {
+            fetchThreadIDs();
+            fetchThreads();
             setIsSubmitting(false);
         }
     };
@@ -71,40 +78,54 @@ const ThreadList: React.FC = () => {
 
     return (
         <div className="thread-list">
-            <h1>Reddit-style Discussion Threads</h1>
+            <h1>Discussion Threads</h1>
 
-            <form onSubmit={handleCreateThread} className="create-thread-form">
-                <h3>Create a New Thread</h3>
-                <input
-                    type="text"
-                    value={newThreadTitle}
-                    onChange={(e) => setNewThreadTitle(e.target.value)}
-                    placeholder="Enter thread title..."
-                    disabled={isSubmitting}
-                />
-                <input
-                    type="text"
-                    value={newThreadContent}
-                    onChange={(e) => setNewThreadContent(e.target.value)}
-                    placeholder="Enter thread content..."
-                    disabled={isSubmitting}
-                />
-                <button type="submit" disabled={isSubmitting}>
-                    {isSubmitting ? 'Creating...' : 'Create Thread'}
-                </button>
-            </form>
+            {isPostExpanded ? (
+
+                <form onSubmit={handleCreateThread} className="create-thread-form">
+                    <h3>Create a New Thread</h3>
+                    <input
+                        type="text"
+                        value={newThreadTitle}
+                        onChange={(e) => setNewThreadTitle(e.target.value)}
+                        placeholder="Enter thread title..."
+                        disabled={isSubmitting}
+                    />
+                    <input
+                        type="text"
+                        value={newThreadContent}
+                        onChange={(e) => setNewThreadContent(e.target.value)}
+                        placeholder="Enter thread content..."
+                        disabled={isSubmitting}
+                    />
+                    <button type="submit" disabled={isSubmitting}>
+                        {isSubmitting ? 'Creating...' : 'Create Thread'}
+                    </button>
+                    <button onClick={() => setIsPostExpanded(false)}>Cancel</button>
+                </form>
+            ) : (
+                <button onClick={() => setIsPostExpanded(true)}>Create a New Thread</button>
+            )}
 
             <h2>All Threads</h2>
             {threads.length === 0 ? (
                 <p>No threads yet. Create your first thread above!</p>
             ) : (
-                <ul className="threads">
-                    {threads.map(thread => (
-                        <li key={thread.id}>
-                            <Link to={`/thread/${thread.id}`}>Thread #{thread.id}</Link>
-                        </li>
+                <>
+                    {threads.map((thread: Thread) => (
+                        <Link to={`/thread/${thread.id}`} key={thread.id} className="thread-link">
+                            <div className="threads-list-container">
+                                <div className="thread-list-title">
+                                    <h3>{thread.title}</h3>
+                                </div>
+                                <div className="thread-list-content">
+                                    <p>{thread.content.length > 50 ?
+                                        thread.content.substring(0, 50) + '...' : thread.content}</p>
+                                </div>
+                            </div>
+                        </Link>
                     ))}
-                </ul>
+                </>
             )}
         </div>
     );

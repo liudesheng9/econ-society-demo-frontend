@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Thread, Reply } from '../types';
 import { api, apiLogs } from '../utils/api';
 import Comment from './Comment';
+import { useNavigate } from 'react-router-dom';
+import './ThreadView.css';
 
 interface ThreadViewProps {
     threadId: number;
@@ -15,6 +17,7 @@ const ThreadView: React.FC<ThreadViewProps> = ({ threadId }) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [rawApiResponse, setRawApiResponse] = useState<any>(null);
     const [isCommentFormExpanded, setIsCommentFormExpanded] = useState(false);
+    const navigate = useNavigate();
 
     const fetchThread = async () => {
         setLoading(true);
@@ -75,12 +78,16 @@ const ThreadView: React.FC<ThreadViewProps> = ({ threadId }) => {
     return (
         <div className="thread-view">
 
+            <button className="back-button circle-button item-center" onClick={() => navigate('/thread')} aria-label="Back to threads">
+                <svg fill="currentColor" height="16" viewBox="0 0 20 20" width="16" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 9.25H3.81l6.22-6.22a.771.771 0 0 0-.015-1.046.772.772 0 0 0-1.045-.014l-7.5 7.5a.75.75 0 0 0 0 1.06l7.5 7.5c.283.27.77.263 1.046-.013a.772.772 0 0 0 .014-1.047l-6.22-6.22H18c.398 0 .75-.352.75-.75a.772.772 0 0 0-.75-.75Z"></path>
+                </svg>
+            </button>
+
             <h1>{thread.title}</h1>
-            <div className="thread-info">
-                <span
-                >
-                    Thread ID: {thread.id}
-                </span>
+
+            <div className="thread-content">
+                <p>{thread.content}</p>
             </div>
 
             {isCommentFormExpanded ? (
@@ -119,7 +126,6 @@ const ThreadView: React.FC<ThreadViewProps> = ({ threadId }) => {
             )}
 
             <div className="comments-section">
-                <h3>Comments</h3>
                 {topLevelComments.length === 0 ? (
                     <p>No comments yet. Be the first to comment!</p>
                 ) : (

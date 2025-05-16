@@ -1,4 +1,6 @@
 .hide-replies-button {
+    background-color: transparent;
+    color: #a3a3a3;
     margin-left: 10px;
     margin-top: 5px;
     width: 30px;
@@ -7,4 +9,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+}
+
+.hide-replies-button:hover {
+    background-color: #f0f0f0;
 }
