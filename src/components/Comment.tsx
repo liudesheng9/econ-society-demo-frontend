@@ -61,6 +61,11 @@ const Comment: React.FC<CommentProps> = ({ comment, replies, threadId, reply_typ
                     >
                         ID: {comment.id}
                     </span>
+                    <div className="comment-timestamp">
+                        {comment.time ?
+                            new Date(comment.time).toLocaleString() :
+                            'No timestamp available'}
+                    </div>
                 </div>
                 <p>{comment.content}</p>
                 <div className="comment-actions">

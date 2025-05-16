@@ -98,10 +98,10 @@ const ThreadList: React.FC = () => {
                         placeholder="Enter thread content..."
                         disabled={isSubmitting}
                     />
-                    <button type="submit" disabled={isSubmitting}>
+                    <button type="submit" className="button-margin-right" disabled={isSubmitting}>
                         {isSubmitting ? 'Creating...' : 'Create Thread'}
                     </button>
-                    <button onClick={() => setIsPostExpanded(false)}>Cancel</button>
+                    <button className="button-margin-right" onClick={() => setIsPostExpanded(false)}>Cancel</button>
                 </form>
             ) : (
                 <button onClick={() => setIsPostExpanded(true)}>Create a New Thread</button>
@@ -117,6 +117,11 @@ const ThreadList: React.FC = () => {
                             <div className="threads-list-container">
                                 <div className="thread-list-title">
                                     <h3>{thread.title}</h3>
+                                    <div className="thread-timestamp">
+                                        {thread.time ?
+                                            new Date(thread.time).toLocaleString() :
+                                            'No timestamp available'}
+                                    </div>
                                 </div>
                                 <div className="thread-list-content">
                                     <p>{thread.content.length > 50 ?

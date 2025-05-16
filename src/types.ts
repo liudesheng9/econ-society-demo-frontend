@@ -4,12 +4,14 @@ export interface Thread {
     content: string;
     replies: Reply[];
     room_id: number;
+    time: string; // ISO string timestamp
 }
 
 export interface Reply {
     id: string;
     parent_id: string | null;
     content: string;
+    time: string; // ISO string timestamp
 }
 
 export interface NewReply {

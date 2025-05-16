@@ -8,7 +8,9 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     margin-bottom: 16px;
-    padding: 16px;
+    padding-top: 16px;
+    padding-left: 16px;
+    padding-bottom: 16px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     transition: all 0.2s ease;
 }
@@ -16,6 +18,13 @@
 .threads-list-container:hover {
     border-color: #a5a5a5;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+.thread-list-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .thread-list-title h3 {
@@ -75,4 +84,15 @@
     text-decoration: none;
     color: inherit;
     display: block;
+}
+
+.thread-timestamp {
+    margin-right: 10px;
+    font-size: 12px;
+    color: #787c7e;
+    font-style: italic;
+}
+
+.button-margin-right {
+    margin-right: 10px;
 }

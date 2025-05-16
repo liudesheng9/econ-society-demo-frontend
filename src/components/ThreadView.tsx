@@ -86,6 +86,12 @@ const ThreadView: React.FC<ThreadViewProps> = ({ threadId }) => {
 
             <h1>{thread.title}</h1>
 
+            <div className="thread-timestamp">
+                {thread.time ?
+                    'created at ' + new Date(thread.time).toLocaleString() :
+                    'No timestamp available'}
+            </div>
+
             <div className="thread-content">
                 <p>{thread.content}</p>
             </div>
